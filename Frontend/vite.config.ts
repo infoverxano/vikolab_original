@@ -10,5 +10,7 @@ export default defineConfig(async () => {
     const m = await import('./.vite-source-tags.js');
     plugins.push(m.sourceTags());
   } catch {}
-  return { plugins };
+  return { plugins ,build: {
+      sourcemap: false
+    }};
 })
