@@ -60,8 +60,8 @@ app.use("/api/portfolios", portfoliosRouter);
 
 app.get("/", (req, res) => res.json({ status: "CRM API running" }));
 
-app.listen(3000, () => {
-  console.log("✅ Backend running on http://localhost:3000");
-});
+// app.listen(3000, () => {
+//   console.log("✅ Backend running on http://localhost:3000");
+// });
 
-// export default app;
+export default app;
