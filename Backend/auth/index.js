@@ -39,10 +39,12 @@ export const auth = betterAuth({
     "http://localhost:5173",
     "http://localhost:3000",
     "http://127.0.0.1:5173",
+    "https://vikolab.vercel.app"
   ],
 
   advanced: {
-    disableCsrfCheck: true, // ← fix le problème Origin
+    // disableCsrfCheck: true, 
+    useSecureCookies: true,
   },
 
   database: drizzleAdapter(db, {
