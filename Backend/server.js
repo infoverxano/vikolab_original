@@ -24,7 +24,8 @@ app.use(cors({
       "http://localhost:5173",
       "http://localhost:3000",
       "http://127.0.0.1:5173",
-      "https://vikolab.vercel.app"
+      "https://vikolab.vercel.app",
+      "https://vikolab.ma"
     ];
     if (allowed.includes(origin)) return callback(null, true);
     callback(new Error("Not allowed by CORS"));
