@@ -228,30 +228,82 @@ import {
   Video,
   ShoppingBag,
   Printer,
+    Plus,
+  Search,
+  Pencil,
+  Trash2,
+  Wrench,
+  AlertTriangle,
+  Loader2,
+
+  Rocket,
+  Lightbulb,
+  Settings,
+  Shield,
+  BarChart3,
+  Globe,
+  Smartphone,
+  Cloud,
+  Ticket,
 } from "lucide-react";
 import api from '../api/axios';
-const iconMap = {
-  CreditCard,
-  Palette,
-  FileText,
-  Image,
-  Layout,
-  Store,
-  Car,
-  Share2,
-  Monitor,
-  Sticker,
-  Signpost,
-  ScrollText,
-  Tag,
-  Building2,
-  Menu,
-  Percent,
-  Megaphone,
-  Video,
-  ShoppingBag,
-  Printer,
+const ICON_MAP = {
+  rocket: Rocket,
+  lightbulb: Lightbulb,
+  palette: Palette,
+  settings: Settings,
+  shield: Shield,
+  chart: BarChart3,
+  globe: Globe,
+  wrench: Wrench,
+  smartphone: Smartphone,
+  cloud: Cloud,
+
+  creditcard: CreditCard,
+  filetext: FileText,
+  image: Image,
+  layout: Layout,
+  store: Store,
+  car: Car,
+  share: Share2,
+  monitor: Monitor,
+  tag: Tag,
+  megaphone: Megaphone,
+
+  sticker: Sticker,
+  signpost: Signpost,
+  scrolltext: ScrollText,
+  building: Building2,
+  menu: Menu,
+  ticket: Ticket,
+  percent: Percent,
+  video: Video,
+  shoppingbag: ShoppingBag,
+  printer: Printer,
 };
+
+function ServiceIcon({ icon, image, name }) {
+  if (image) {
+    return <div><img src={image} alt={name} className="w-12 h-12 mb-4 rounded-xl object-cover shadow-sm" /></div>;
+  }
+  if (icon) {
+    const IconComponent = ICON_MAP[icon];
+
+    if (!IconComponent) {
+      return (
+        <div className="w-14 h-14 rounded-2xl bg-gray-100 flex items-center justify-center text-gray-400">
+          ?
+        </div>
+      );
+    }
+
+    return (
+      <div className="w-12 h-12 rounded-xl bg-[#F4F416]/10 flex items-center justify-center mb-4 group-hover:bg-[#F4F416]/20 group-hover:scale-110 transition-all duration-300">
+        <IconComponent size={26} className="w-6 h-6 text-[#F4F416]" />
+      </div>
+    );
+  }
+}
 
 export function Services() {
   const ref = useRef(null);
@@ -381,8 +433,8 @@ export function Services() {
                 </div>
               ))
               : services.map((service, index) => {
-                const Icon =
-                  iconMap[service.icon] || Printer;
+                // const Icon =
+                //   iconMap[service.icon] || Printer;
 
                 return (
                   <motion.div
@@ -407,13 +459,16 @@ export function Services() {
                   >
                     <div
                       className={`relative p-5 rounded-2xl h-full bg-gradient-to-br from-white/[0.05] to-transparent border border-white/10 hover:border-[#F4F416]/50 transition-all duration-500 ${hoveredIndex === index
-                          ? "scale-[1.02] shadow-2xl shadow-[#F4F416]/10"
-                          : ""
+                        ? "scale-[1.02] shadow-2xl shadow-[#F4F416]/10"
+                        : ""
                         }`}
                     >
                       {/* ICON */}
-                      <div className="w-12 h-12 rounded-xl bg-[#F4F416]/10 flex items-center justify-center mb-4 group-hover:bg-[#F4F416]/20 group-hover:scale-110 transition-all duration-300">
+                      {/* <div className="w-12 h-12 rounded-xl bg-[#F4F416]/10 flex items-center justify-center mb-4 group-hover:bg-[#F4F416]/20 group-hover:scale-110 transition-all duration-300">
                         <Icon className="w-6 h-6 text-[#F4F416]" />
+                      </div> */}
+                      <div className="flex items-start justify-between">
+                        <ServiceIcon icon={service.icon} image={service.image} name={service.name} />
                       </div>
 
                       {/* TITLE */}
@@ -429,8 +484,8 @@ export function Services() {
                       {/* LINE */}
                       <div
                         className={`absolute bottom-0 left-0 h-0.5 bg-[#F4F416] transition-all duration-300 rounded-full ${hoveredIndex === index
-                            ? "w-full"
-                            : "w-0"
+                          ? "w-full"
+                          : "w-0"
                           }`}
                       />
                     </div>

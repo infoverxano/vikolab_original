@@ -1,11 +1,11 @@
 import { motion, useInView } from 'framer-motion';
 import { useRef, useState } from 'react';
 import { useLanguage } from '../contexts/LanguageContext';
-import { Mail, MapPin, Phone, Send, Instagram, Twitter, Linkedin, CheckCircle, ArrowUpRight } from 'lucide-react';
-
+import { Mail, MapPin, Phone, Send, Instagram, Twitter, Linkedin, CheckCircle, ArrowUpRight, Facebook } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 const socialLinks = [
   { icon: Instagram, href: 'https://www.instagram.com/viko.lab?igsh=d2hwZ3ZrbTE5YzNw' },
-  { icon: Twitter, href: 'https://twitter.com/vikolab' },
+  { icon: Facebook, href: 'https://www.facebook.com/share/17qXkEwn7i/' },
   // { icon: Linkedin, href: 'https://linkedin.com/company/vikolab' }
 ];
 
@@ -15,6 +15,7 @@ export function Contact() {
   const { lang, dir } = useLanguage();
   const [formState, setFormState] = useState({ name: '', email: '', phone: '', service: '', message: '' });
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const content = {
     fr: {
@@ -24,7 +25,8 @@ export function Contact() {
       name: "Nom complet", email: "Email", phone: "Téléphone", service: "Service souhaité", message: "Votre message",
       submit: "Envoyer", sent: "Message envoyé !",
       services: ["Impression Numérique", "Logo & Identité", "Cartes Visite", "Flyers & Brochures", "Signalétique", "Habillage Véhicule", "Réseaux Sociaux", "Autre"],
-      cta: "Ou appelez-nous", ctaBtn: "Appeler"
+      cta: "Ou appelez-nous", ctaBtn: "Appeler",
+      loading: "Envoi en cours..."
     },
     en: {
       badge: "Contact", title: "Let's Discuss Your", titleHighlight: "Project",
@@ -33,7 +35,8 @@ export function Contact() {
       name: "Full Name", email: "Email", phone: "Phone", service: "Service Needed", message: "Your Message",
       submit: "Send", sent: "Message Sent!",
       services: ["Digital Printing", "Logo & Identity", "Business Cards", "Flyers & Brochures", "Signage", "Vehicle Wrap", "Social Media", "Other"],
-      cta: "Or call us directly", ctaBtn: "Call Now"
+      cta: "Or call us directly", ctaBtn: "Call Now",
+      loading: "Sending..."
     },
     ar: {
       badge: "تواصل", title: "لنتحدث عن", titleHighlight: "مشروعك",
@@ -42,13 +45,50 @@ export function Contact() {
       name: "الاسم الكامل", email: "البريد", phone: "الجوال", service: "الخدمة المطلوبة", message: "الرسالة",
       submit: "إرسال", sent: "تم الإرسال!",
       services: ["الطباعة الرقمية", "شعار وهوية", "بطاقات", "منشورات", "لافتات", "تغليف سيارات", "تواصل", "أخرى"],
-      cta: "أو اتصل بنا مباشرة", ctaBtn: "اتصل الآن"
+      cta: "أو اتصل بنا مباشرة", ctaBtn: "اتصل الآن",
+      loading: "جاري الإرسال..."
     }
   };
 
   const t = content[lang];
 
-  const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setIsSubmitted(true); setTimeout(() => setIsSubmitted(false), 3000); };
+  // const handleSubmit = (e: React.FormEvent) => { e.preventDefault(); setIsSubmitted(true); setTimeout(() => setIsSubmitted(false), 3000); };
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+
+    try {
+      setIsLoading(true);
+      await emailjs.send(
+        'service_il1iwef',
+        'template_8snvenj',
+        {
+          name: formState.name,
+          email: formState.email,
+          phone: formState.phone,
+          service: formState.service,
+          message: formState.message,
+        },
+        'AHTMYEt41WDmscK-i'
+      );
+
+      setIsSubmitted(true);
+
+      setFormState({
+        name: '',
+        email: '',
+        phone: '',
+        service: '',
+        message: '',
+      });
+
+      setTimeout(() => setIsSubmitted(false), 3000);
+    } catch (error) {
+      console.error(error);
+      alert('Failed to send message');
+    } finally {
+      setIsLoading(false);
+    }
+  };
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => { setFormState(prev => ({ ...prev, [e.target.name]: e.target.value })); };
 
   return (
@@ -87,7 +127,7 @@ export function Contact() {
 
               <div className="p-6 rounded-2xl bg-[#F4F416] text-black">
                 <p className="text-black/70 mb-4">{t.cta}</p>
-                <a href="tel:+966XXXXXXXXX" className="w-full py-3 bg-black text-white font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">{t.ctaBtn}<ArrowUpRight className="w-4 h-4" /></a>
+                <a href="tel:+212610090067" className="w-full py-3 bg-black text-white font-semibold rounded-xl flex items-center justify-center gap-2 hover:bg-black/80 transition-colors">{t.ctaBtn}<ArrowUpRight className="w-4 h-4" /></a>
               </div>
             </motion.div>
 
@@ -108,8 +148,32 @@ export function Contact() {
                     </select>
                   </div>
                   <textarea name="message" value={formState.message} onChange={handleChange} required rows={4} placeholder={t.message} className="w-full px-4 py-3 rounded-xl bg-white/5 border border-white/10 text-white placeholder-gray-500 focus:border-[#F4F416] focus:outline-none transition-colors resize-none" />
-                  <motion.button type="submit" disabled={isSubmitted} className="w-full py-4 bg-[#F4F416] text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-70" whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
+                  {/* <motion.button type="submit" disabled={isSubmitted} className="w-full py-4 bg-[#F4F416] text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-70" whileHover={{ scale: 1.01 }} whileTap={{ scale: 0.99 }}>
                     {isSubmitted ? <><CheckCircle className="w-5 h-5" />{t.sent}</> : <><Send className="w-5 h-5" />{t.submit}</>}
+                  </motion.button> */}
+                  <motion.button
+                    type="submit"
+                    disabled={isLoading || isSubmitted}
+                    className="w-full py-4 bg-[#F4F416] text-black font-bold rounded-xl flex items-center justify-center gap-2 hover:bg-white transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+                    whileHover={{ scale: isLoading ? 1 : 1.01 }}
+                    whileTap={{ scale: isLoading ? 1 : 0.99 }}
+                  >
+                    {isLoading ? (
+                      <>
+                        <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                        Sending...
+                      </>
+                    ) : isSubmitted ? (
+                      <>
+                        <CheckCircle className="w-5 h-5" />
+                        {t.sent}
+                      </>
+                    ) : (
+                      <>
+                        <Send className="w-5 h-5" />
+                        {t.submit}
+                      </>
+                    )}
                   </motion.button>
                 </form>
               </div>

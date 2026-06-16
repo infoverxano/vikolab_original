@@ -10,6 +10,7 @@ const floatingIcons = [
   { Icon: Store, delay: 2, x: 0, y: -40 },
 ];
 
+
 export function Hero() {
   const { lang, dir } = useLanguage();
   const isRTL = dir === 'rtl';
@@ -20,11 +21,10 @@ export function Hero() {
 
   const content = {
     fr: {
-      badge: "Agence de Design & Impression Numérique à Riyad",
-      title1: "DESIGN",
-      title2: "SANS",
-      title3: "LIMITES",
-      description: "Création logo, impression numérique, carte visite, signalétique, habillage voiture à Riyad. 27 services de design & imprimerie professionnels. Devis gratuit 24h !",
+      badge: "Agence de Design & Impression Numérique à Casablanca",
+      title1: "TRANSFORMER",
+      title2: "LES IDÉES EN CRÉATIVITÉ",
+      description: "Création de logos, impression numérique, cartes de visite, enseignes, Habillage véhicule à Casablanca.Design professionnel et impression haute qualité pour booster votre image de marque. Devis gratuit sous 24h.",
       cta1: "Voir Nos Services",
       cta2: "Devis Gratuit",
       location: "casablanca, hay mohammadi",
@@ -36,14 +36,13 @@ export function Hero() {
       ]
     },
     en: {
-      badge: "Graphic Design & Digital Printing Agency in Riyadh",
-      title1: "DESIGN",
-      title2: "WITHOUT",
-      title3: "LIMITS",
-      description: "Logo creation, digital printing, business cards, signage, vehicle wrapping in Riyadh. 27 professional design & printing services. Free quote in 24h!",
+      badge: "Graphic Design & Digital Printing Agency in Casablanca",
+      title1: "TURNING",
+      title2: "IDEAS INTO CREATIVITY",
+      description: "Logo design, digital printing, business cards, signage & vehicle wrapping in Casablanca.Professional branding and high-quality printing services to grow your business. Free quote within 24h.",
       cta1: "Our Services",
       cta2: "Free Quote",
-      location: "Riyadh, Saudi Arabia",
+      location: "casablanca, hay mohammadi",
       scroll: "Explore",
       stats: [
         { value: "27+", label: "Services" },
@@ -53,10 +52,9 @@ export function Hero() {
     },
     ar: {
       badge: "وكالة تصميم وطباعة رقمية في الدار البيضاء",
-      title1: "تصميم",
-      title2: "بدون",
-      title3: "حدود",
-      description: "تصميم شعار، طباعة رقمية، بطاقات أعمال، لافتات، تغليف سيارات في الرياض. 27 خدمة احترافية. عرض سعر مجاني خلال 24 ساعة!",
+      title1: "أفكار ",
+      title2: "تتحول إلى إبداع",
+      description: "تصميم الشعارات، الطباعة الرقمية، بطاقات الأعمال، اللوحات الإشهارية وتغليف السيارات في الدار البيضاء.تصاميم احترافية وخدمات طباعة عالية الجودة لتطوير هوية علامتك التجارية. عرض سعر مجاني خلال 24 ساعة.",
       cta1: "استكشف خدماتنا",
       cta2: "عرض سعر مجاني",
       location: "االحي المحمدي، الدار البيضاء",
@@ -131,7 +129,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: 0.3, duration: 0.5 }}
-              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-white leading-[0.9]"
+              className="text-6xl sm:text-7xl lg:text-8xl xl:text-8xl font-black tracking-tighter text-white leading-[0.9]"
             >
               {t.title1}
             </motion.h1>
@@ -139,7 +137,8 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: 0.4, duration: 0.5 }}
-              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter text-[#F4F416] leading-[0.9]"
+              className="text-6xl sm:text-7xl lg:text-8xl xl:text-8xl font-black tracking-tighter text-[#F4F416] leading-[0.9]"
+              style={{lineHeight:'100px'}}
             >
               {t.title2}
             </motion.h1>
@@ -147,7 +146,7 @@ export function Hero() {
               initial={{ opacity: 0, y: 30 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: 0.5, duration: 0.5 }}
-              className="text-6xl sm:text-7xl lg:text-8xl xl:text-9xl font-black tracking-tighter leading-[0.9]"
+              className="text-6xl sm:text-7xl lg:text-8xl xl:text-2xl font-black tracking-tighter leading-[0.9]"
               style={{ WebkitTextStroke: '2px rgba(244,244,22,0.9)', color: 'transparent' }}
             >
               {t.title3}
